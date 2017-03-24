@@ -1,0 +1,57 @@
+[
+    {
+        "username": "Syugen",
+        "password": "123456",
+        "type": "admin"
+    },
+    {
+        "username": "Jack",
+        "password": "123456",
+        "type": "admin"
+    },
+    {
+        "username": "Judy",
+        "password": "123456",
+        "type": "admin"
+    },
+    {
+        "username": "Raymond",
+        "password": "123456",
+        "type": "admin"
+    },
+    {
+        "username": "Dummy",
+        "password": "123456",
+        "type": "student",
+        "courses": ["CSC108", "CSC148", "CSC165"],
+        "friends": ["Syugen", "Raymond", "Judy", "dashen", "Dummy2"]
+    },
+    {
+      "username": "Dummy2",
+      "password": "123456",
+      "type": "student",
+      "courses": ["CSC369","CSC373","CSC411"],
+      "friends": ["Syugen", "Dummy"]
+    },
+    {
+        "username":"dashen",
+        "password":"123456",
+        "type":"tutor",
+        "courses":["CSC373","CSC369"],
+        "friends":[]
+    },
+    {
+        "username":"xueba",
+        "password":"123456",
+        "type":"tutor",
+        "courses":["CSC373","CSC369","CSC108","CSC165","CSC411"],
+        "friends":[]
+    },
+    {
+        "username":"Jimmy",
+        "password":"123456",
+        "type":"tutor",
+        "courses":["CSC373"],
+        "friends":[]
+    }
+]

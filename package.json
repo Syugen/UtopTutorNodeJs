@@ -1,0 +1,17 @@
+{
+  "name": "TutoringApp",
+  "description": "The group project",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "mongodb": "^2.2.11",
+    "mongoose": "^4.7.0",
+    "multer": "^1.2.0",
+    "nodemon": "^1.11.0",
+    "nunjucks": "^3.0.0",
+    "socket.io": "^1.7.1"
+  }
+}

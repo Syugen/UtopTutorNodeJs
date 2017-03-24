@@ -1,0 +1,9 @@
+Scope sounds alright, but you might run into some scope creep/hidden complexity easily. A few things you might want to watch out for:
+
+Make sure you keep the scope small. Course message boards + live chat is maybe more than you need. Focus on one thing first, do it well, and then move on if ou have time. Live chat might be messier than you expect, but depending on how you do it might not be so bad. There is a lot that goes into getting things working. From just the chat setup, to adding people to chat with, checking online status, back-end. Make sure you think through this carefully and have a good idea of what you are doing down to how you want to handle requests, your back-end storage of things, and front-end UI elements.
+
+Similarly, think carefully about what is being entered and what your requests are going to look like for a lot of the rest of your functionality. What do you get back from entering in something to search? What do you send? How are you distinguishing between searches by course and by name? When someone is posting details about what they are willing to tutor and how much they are charging, what does their request to the server look like? How is it stored?
+
+Thinking through all of these things will help you avoid getting blindsided by complexity later on, and will let you plan everything out better.
+
+Mark: 7/10

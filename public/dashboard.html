@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="body-dash">
+
+    <div class="col-sm-3 col-md-3 sidebar">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-tasks fa"></i>
+                 {% if session.user.type === "admin" %}
+                    All Courses
+                 {% else %}
+                    Courses Enrolled In
+                 {% endif %}
+            </div>
+
+            <div class="panel-body">
+                {% if courses.length === 0 %}
+                    Search and enroll in a course now!
+                {% endif %}
+
+                {% for course in courses %}
+                    <a href="/course?id={{course.code}}" class="list-group-item">
+                        {{course.code}}<br>
+                        Posts: {{course.num_posts}}<br>
+                        Tutors: {{course.num_tutors}}<br>
+                        Students: {{course.num_students}}<br>
+                    </a>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-md-6">
+        <h2>Dashboard</h2>
+        {% if session.user.type === "admin" %}
+        <div class="list-group-item" id="admin-list">
+            <p>Hi {{session.user.username}}, what would you like to do today?</p>
+            <p>Click a course on the left to manage posts in forum.</p>
+            <p>Click a user on the right to edit this person's profile.</p>
+        </div>
+        {% elif session.user.type === "student" %}
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-pencil-square-o fa"></i> Post Questions
+                </div>
+
+                <div class="panel-body">
+                    <form id="post-form" class="list-group-item">
+                         <p>Post a question and connect with tutors.</p>
+                        <p>Subject<br>
+                            <select name="subject" style="width: 100%">
+                                <option value="default" selected disabled>PLEASE SELECT</option>
+                                {% for course in courses %}
+                                <option value="{{course.code}}">{{course.code}}</option>
+                                {% endfor %}
+                            </select>
+                        </p>
+                        <p>Title<br>
+                            <input type="text" name="title" style="width: 100%"
+                            placeholder="Example: I'm preparing for CSC108 exam.">
+                        </p>
+                        <p>Detailed information:<br>
+                            <input type="text" name="detail" style="width: 100%"
+                            placeholder="Want some help on learning how to read files.">
+                        </p>
+                        <p>I'm willing to pay up to: <span id="pay-amount">$ 50 / hour</span><br>
+                            <input type="range" id="pay" name="range">
+                        </p>
+                        <p>I need help by:<br>
+                            <input type="radio" name="when" value="now">Now
+                            <input type="radio" name="when" value="tmr">Tomorrow
+                            <input type="radio" name="when" value="eow">End of Week
+                        </p>
+                        <input type="submit" value="Post">
+                        <span id="form-feedback" style="color: red"></span>
+                    </form>
+                </div>
+            </div>
+
+        {% elif session.user.type === "tutor" %}
+             <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-pencil-square-o fa"></i> Post Advertisments
+                </div>
+
+                <div class="panel-body">
+                    <form id="post-form-tut" class="list-group-item">
+                        <p>Post an ad and connect with students.</p>
+                        <p>Subject<br>
+                            <select name="subject" style="width: 100%">
+                                <option value="default" selected disabled>PLEASE SELECT</option>
+                                {% for course in courses %}
+                                <option value="{{course.code}}">{{course.code}}</option>
+                                {% endfor %}
+                            </select>
+                        </p>
+                        <p>Title<br>
+                            <input type="text" name="title" style="width: 100%"
+                            placeholder="I'm a good tutor.">
+                        </p>
+                        <p>Detailed information:<br>
+                            <input type="text" name="detail" style="width: 100%"
+                            placeholder="I'm good at teaching this course.">
+                        </p>
+                        <p>Tutoring Rate: <span id="pay-amount">$ 50 / hour</span><br>
+                            <input type="range" id="pay" name="range">
+                        </p>
+                        <input type="submit" value="Post">
+                        <span id="form-feedback" style="color: red"></span>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-sm-3 col-md-3 sidebar">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-user"></i>
+                    {% if session.user.type === "admin" %}
+                        All Users
+                    {% else %}
+                        Friends List
+                    {% endif %}
+            </div>
+
+            <div class="panel-body">
+                {% if friends.length === 0 %}
+                    You don't have any friends!
+                {% endif %}
+                {% for friend in friends %}
+                    <a href="/profile?id={{friend.username}}" class="list-group-item">
+                        {{friend.username}}
+                        <span style="float: right; color: {% if friend.online %}green{% else %}red{% endif %}">
+                            ● {% if friend.online %}online{% else %}offline{% endif %}
+                        </span>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

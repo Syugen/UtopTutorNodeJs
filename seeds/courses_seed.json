@@ -1,0 +1,274 @@
+[
+    {
+        "code": "CSC108",
+        "posts": [
+            {
+                "text": "This is the first CSC108 post",
+                "author": "Syugen",
+                "date": "2017-12-31T23:07:11Z"
+            }
+        ],
+        "tutors":["xueba","Syugen"],
+        "students":["Dummy"]
+    },
+    {
+        "code": "CSC148",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC165",
+        "tutors":["xueba"],
+        "students":[]
+    },
+    {
+        "code": "CSC207",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC209",
+        "students":[],
+        "tutors":[],
+        "posts":[{
+          "text":"Test1",
+          "author":"Raymond",
+          "date":"2016-10-29T15:54:10Z",
+          "responses":[]},
+          {
+            "text":"Test2",
+            "author":"Judy",
+            "date":"2016-10-28T15:54:10Z",
+            "responses":[]}]
+    },
+    {
+        "code": "CSC369",
+        "tutors": ["dashen","xueba"],
+        "students":[]
+    },
+    {
+        "code": "CSC373",
+        "tutors": ["dashen","xueba"],
+        "students":["Dummy","Dummy2"]
+    },
+    {
+        "code":"CSC411",
+        "tutors":["xueba"],
+        "students":[]
+    },
+    {
+        "code": "CSC120",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC121",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC204",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC236",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC240",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC258",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC263",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC265",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC300",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC301",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC302",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC304",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC309",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC310",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC318",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC320",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC321",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC324",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC336",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC343",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC358",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC384",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC385",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC401",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC410",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC412",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC418",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC420",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC428",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC436",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC438",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC443",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC446",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC448",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC458",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC463",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC465",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC466",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC469",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC473",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC485",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC486",
+        "students":[],
+        "tutors":[]
+    },
+    {
+        "code": "CSC488",
+        "students":[],
+        "tutors":[]
+    }
+]

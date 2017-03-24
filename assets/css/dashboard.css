@@ -1,0 +1,22 @@
+#admin-list{
+	border:none;
+}
+
+.list-group-item{
+	border-left: none;
+	border-right:none;
+	border-top: none;
+	border-bottom: 2px solid;
+}
+
+.list-group-item input[type="submit"]{
+  color: white;
+  background-color: #F05F40;
+  border-color: #F05F40;
+  font-size: 18px;
+  width:100px;
+  border: none;
+  border-radius: 300px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
