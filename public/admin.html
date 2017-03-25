@@ -4,8 +4,16 @@
 <div class="body-dash">
 
     <div class="col-sm-9 col-md-9" style="overflow-x: scroll">
-        Start: <input type="date" id="start-date">End: <input type="date" id="end-date">
+        <form action="dashboard" id="retrieve-form">
+        Start: <input type="date" id="start-date" name="start">
+        End: <input type="date" id="end-date" name="end">
+        <input type="submit" value="Retrieve"></form>
         <div class="list-group-item" id="admin-list">
+            <form id="update-form">
+            Username: <input type="text" name="username">
+            Course: <input type="text" name="course">
+            <input type="submit" value="Update">
+            <span id="form-feedback" style="color: red"></span>
             <table class="table table-bordered">
                 <tr>
                 <th>Time</th>
@@ -18,7 +26,7 @@
                     <td>{{i+9}}:00</td>
                     {% for j in range(cells[i].length) %}
                         <td>
-                            <input type="checkbox" id="{{dates[j].substring(0, 8)}}-{{i+9}}">
+                            <input type="checkbox" name="{{dates[j].substring(0, 8)}}-{{i+9}}">
                             {% if cells[i][j] !== "" %}
                             {{cells[i][j].username}}, {{cells[i][j].course}}
                             {% endif %}
@@ -27,6 +35,7 @@
                 </tr>
                 {% endfor %}
             </table>
+            </form>
         </div>
     </div>
 

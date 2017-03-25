@@ -51,6 +51,7 @@ app.post("/signup", signin.postNewUser);// Done
 app.post("/login", signin.postLogin); // Done
 
 app.get("/dashboard", dashboard.getDashboard);// Done
+app.post("/postAdminUpdate", dashboard.postAdminUpdate);
 app.post("/postStudentRequest", dashboard.postStudentRequest);// Done
 app.post("/postTutorRequest", dashboard.postTutorRequest);// Done
 
