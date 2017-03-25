@@ -3,33 +3,78 @@
 var User = require("../models/user");
 var Course = require("../models/course");
 var Post = require("../models/post");
+var Order = require("../models/order");
+var Timetable = require("../models/timetable");
 
 exports.getDashboard = function(req, res) {
     if (req.session.user === undefined) return res.redirect("/login");
 
-    User.findOne({ username : req.session.user.username }, function(err, user) {
-        if (err) throw err;
-        let whatToFind = req.session.user.type === "admin" ? {} : { code : { $in: user.courses }};
-        Course.find(whatToFind, function(err, courses) {
-            let enrolled = [];
-            for (let i = 0; i < courses.length; i++)
-                enrolled.push({ code : courses[i].code,
-                                num_posts : courses[i].posts.length,
-                                num_tutors : courses[i].tutors.length,
-                                num_students : courses[i].students.length});
+    if (req.session.user.type === "admin") {
+        let start = new Date(), end = new Date(), dateString = [];
+        end.setDate(start.getDate() + 8);
+        start.setHours(0, 0, 0, 0);
+        end.setHours(0, 0, 0, 0);
+        for (let i = 0; i < 7; i++) {
+            let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            let d = new Date();
+            d.setDate(start.getDate() + i);
+            let year = d.getFullYear(), month = d.getMonth() + 1, date = d.getDate();
+            if (date < 10) date = "0" + date;
+            if (month < 10) month = "0" + month;
+            dateString.push("" + year + month + date + "\n" + weekday[d.getDay()])
+        }
 
-            let whatToFind = req.session.user.type === "admin" ? {} : { username: { $in: user.friends }};
-            User.find(whatToFind, function(err, users) {
-                let friends = [];
-                for (let i = 0; i < users.length; i++)
-                    friends.push({ username : users[i].username,
-                                   online : users[i].online});
+        Timetable.find({}, function(err, slots) {
+            if (err) throw err;
+            let cells = [];
+            for (let i = 9; i < 22; i++) {
+                let row = [];
+                for (let j = 0; j < 7; j++) {
+                    row.push("");
+                }
+                cells.push(row);
+            }
+            for (let i = 0; i < slots.length; i++) {
+                let diff = slots[i].date.getTime() - start.getTime();
+                let diffDays = Math.floor(diff / (1000 * 3600 * 24));
+                if (0 <= diffDays < 7)
+                    cells[slots[i].date.getHours() - 9][diffDays] = slots[i];
+            }
 
-                let settings = {friends: friends, courses: enrolled, scripts: ["dashboard"], styles: ["dashboard"]};
-                res.render("dashboard.html", settings);
+            Order.find({}, function(err, orders) {
+                if (err) throw err;
+                
+                User.find({}, function(err, users) {
+                    if (err) throw err;
+                    let setting = {users: users, dates: dateString, cells: cells, orders: orders, styles: ["dashboard"]};
+                    return res.render("admin.html", setting);
+                });
             });
         });
-    });
+    } 
+    else{
+        User.findOne({ username : req.session.user.username }, function(err, user) {
+            if (err) throw err;
+            Course.find({ code : { $in: user.courses }}, function(err, courses) {
+                let enrolled = [];
+                for (let i = 0; i < courses.length; i++)
+                    enrolled.push({ code : courses[i].code,
+                                    num_posts : courses[i].posts.length,
+                                    num_tutors : courses[i].tutors.length,
+                                    num_students : courses[i].students.length});
+
+                User.find({ username: { $in: user.friends }}, function(err, users) {
+                    let friends = [];
+                    for (let i = 0; i < users.length; i++)
+                        friends.push({ username : users[i].username,
+                                       online : users[i].online});
+
+                    let settings = {friends: friends, courses: enrolled, scripts: ["dashboard"], styles: ["dashboard"]};
+                    res.render("dashboard.html", settings);
+                });
+            });
+        });
+    }
 }
 
 exports.postStudentRequest = function(req, res) {

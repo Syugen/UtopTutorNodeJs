@@ -24,7 +24,7 @@ signin.init = function() {
         }
         $.post("/login", json_submit, function(result) {
             let status = result.status;
-            if (status === 1) $("#error-message").text("Username not exists");
+            if (status === 1) $("#error-message").text("Username does not exist");
             else if (status === 2) $("#error-message").text("Wrong password");
             else if (status === 0) {
                 window.location = "/dashboard";

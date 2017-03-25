@@ -18,7 +18,6 @@ signin.init = function() {
             else if (status === 1) $("#error-message").text("User already exists");
             else if (status === 2) $("#error-message").text("Password doesn't match");
             else if (status === 0) {
-                console.log("here");
                 window.location = "/dashboard";
             }
         })
