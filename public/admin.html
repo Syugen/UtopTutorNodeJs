@@ -4,7 +4,7 @@
 <div class="body-dash">
 
     <div class="col-sm-9 col-md-9" style="overflow-x: scroll">
-        <h2>Dashboard</h2>
+        Start: <input type="date" id="start-date">End: <input type="date" id="end-date">
         <div class="list-group-item" id="admin-list">
             <table class="table table-bordered">
                 <tr>
@@ -39,8 +39,7 @@
 
             <div class="panel-body">
                 {% for order in orders %}
-                    <span>{{order.order_id}} {{order.username}}</span>
-                
+                    <span class="list-group-item">{{order.order_date}} {{order.username}}</span>
                 {% endfor %}
             </div>
         </div>

@@ -3,7 +3,6 @@
 var User = require("../models/user");
 var Course = require("../models/course");
 var Post = require("../models/post");
-var Order = require("../models/order");
 var Timetable = require("../models/timetable");
 
 exports.getDashboard = function(req, res) {
@@ -26,7 +25,7 @@ exports.getDashboard = function(req, res) {
 
         Timetable.find({}, function(err, slots) {
             if (err) throw err;
-            let cells = [];
+            let cells = [], orders = [];
             for (let i = 9; i < 22; i++) {
                 let row = [];
                 for (let j = 0; j < 7; j++) {
@@ -37,22 +36,22 @@ exports.getDashboard = function(req, res) {
             for (let i = 0; i < slots.length; i++) {
                 let diff = slots[i].date.getTime() - start.getTime();
                 let diffDays = Math.floor(diff / (1000 * 3600 * 24));
-                if (0 <= diffDays < 7)
-                    cells[slots[i].date.getHours() - 9][diffDays] = slots[i];
+                if (0 <= diffDays < 7) cells[slots[i].date.getHours() - 9][diffDays] = slots[i];
+                if (diffDays >= 0) {
+                    let d = slots[i].order_date;
+                    let t = [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds()];
+                    for (let j = 1; j < t.length; j++) if (t[j] < 10) t[j] = "0" + t[j];
+                    orders.push({"order_date": "" + t[0] + t[1] + t[2] + t[3] + t[4] + t[5], "username": slots[i].username});
+                }  
             }
-
-            Order.find({}, function(err, orders) {
-                if (err) throw err;
                 
-                User.find({}, function(err, users) {
-                    if (err) throw err;
-                    let setting = {users: users, dates: dateString, cells: cells, orders: orders, styles: ["dashboard"]};
-                    return res.render("admin.html", setting);
-                });
+            User.find({}, function(err, users) {
+                if (err) throw err;
+                let setting = {users: users, dates: dateString, cells: cells, orders: orders, styles: ["dashboard"], scripts: ["admin"]};
+                return res.render("admin.html", setting);
             });
         });
-    } 
-    else{
+    } else {
         User.findOne({ username : req.session.user.username }, function(err, user) {
             if (err) throw err;
             Course.find({ code : { $in: user.courses }}, function(err, courses) {
