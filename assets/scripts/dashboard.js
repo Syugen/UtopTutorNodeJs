@@ -39,10 +39,7 @@ dashboard.init = function() {
         });
     });
 
-
-    $("#pay").on("input", function() {
-        $("#pay-amount").text("$ " + $(this).val() + " / hour");
-    });
+    $("#phone-input").mask("(999) 999-9999");
 }
 
 $(document).ready(function() {

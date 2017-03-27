@@ -14,7 +14,7 @@ exports.postNewUser = function(req, res) {
     var newUser = new User({
                 username:req.body.username,
                 password:req.body.password,
-                type:req.body.usertype,
+                type:"student",
                 online:true,
                 courses:null,
                 friends: null
