@@ -7,33 +7,30 @@ var dashboard = {};
 //need to specify the template of search.html
 
 dashboard.init = function() {
-    $("#post-form").submit(function(event) {
+    $("#info-form").submit(function(event) {
         event.preventDefault();
-        let json_raw = $(this).serializeArray();
-        let json_submit = {};
-        for (let i = 0; i < json_raw.length; i++)
-            json_submit[json_raw[i].name] = json_raw[i].value;
-        $.post("/postStudentRequest", json_submit, function(result) {
+        let json_info = $(this).serializeArray(), json_time = $("#time-form").serializeArray();
+        let json_submit = {}, cells = [];
+        for (let i = 0; i < json_info.length; i++)
+            json_submit[json_info[i].name] = json_info[i].value;
+        for (let i = 0; i < json_time.length; i++) {
+            if (json_time[i].name === "course")
+                json_submit["course"] = json_time[i].value;
+            else {
+                let name = json_time[i].name;
+                let d = name.slice(0, 4) + "-" + name.slice(4, 6) + "-" + name.slice(6, 8);
+                let date = new Date(d);
+                date = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+                date.setHours(name.substring(9));
+                cells.push(date);
+            }
+        }
+        json_submit.cells = JSON.stringify(cells);
+        $.post("/postOrder", json_submit, function(result) {
             let status = result.status;
             if (status === 1) $("#form-feedback").text("Form incomplete");
             else if (status === 0) {
                 $("#post-form")[0].reset();
-                $("#form-feedback").text("Post successfully");
-            }
-        });
-    });
-
-    $("#post-form-tut").submit(function(event) {
-        event.preventDefault();
-        let json_raw = $(this).serializeArray();
-        let json_submit = {};
-        for (let i = 0; i < json_raw.length; i++)
-            json_submit[json_raw[i].name] = json_raw[i].value;
-        $.post("/postTutorRequest", json_submit, function(result) {
-            let status = result.status;
-            if (status === 1) $("#form-feedback").text("Form incomplete");
-            else if (status === 0) {
-                $("#post-form-tut")[0].reset();
                 $("#form-feedback").text("Post successfully");
             }
         });

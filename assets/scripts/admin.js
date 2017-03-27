@@ -25,7 +25,6 @@ admin.init = function() {
             }
         }
         json_submit.cells = JSON.stringify(cells);
-        console.log(json_submit);
         $.post("/postAdminUpdate", json_submit, function(result) {
             let status = result.status;
             if (status === 1) $("#form-feedback").text("Unauthorized");

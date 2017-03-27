@@ -4,6 +4,7 @@ var User = require("../models/user");
 var Course = require("../models/course");
 var Post = require("../models/post");
 var Timetable = require("../models/timetable");
+var nodemailer = require('nodemailer');
 
 exports.getDashboard = function(req, res) {
     if (req.session.user === undefined) return res.redirect("/login");
@@ -106,41 +107,35 @@ exports.postAdminUpdate = function(req, res) {
     });
 }
 
-exports.postStudentRequest = function(req, res) {
+exports.postOrder = function(req, res) {
     if (req.session.user === undefined) return res.redirect("/login");
 
-    if(!req.body.subject || !req.body.title || !req.body.detail || !req.body.when)
-        return res.send({status: 1});
+    let new_order_json = JSON.parse(JSON.stringify(req.body));
+    console.log(new_order_json);
 
-    let new_post_json = JSON.parse(JSON.stringify(req.body));
-    new_post_json["is_student"] = true;
-    new_post_json["username"] = req.session.user.username;
-    new_post_json["date"] = new Date();
-    let new_post = new Post(new_post_json);
-    new_post.save(function(err, result) {
+     let transporter = nodemailer.createTransport({
+         service: 'QQ', // no need to set host or port etc.
+         auth: {
+             user: '525916424@qq.com',
+             pass: 'wkwpiumfvijnbhda'
+         }
+    });
+
+    let mailOptions = {
+        from: '"UTop Tutor 👻" <525916424@qq.com>',
+        to: 'utoptutoring@gmail.com',
+        subject: 'UTop Tutor - Order Confirmation ✔',
+        html: '<b>To be implemented</b>'
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) return console.log(error);
+        console.log('Message %s sent: %s', info.messageId, info.response);
+    });
+
+/*    new_post.save(function(err, result) {
         if (err) throw err;
         res.send({status: 0});
     });
+*/
 };
-
-exports.postTutorRequest = function(req, res) {
-    if (req.session.user === undefined) return res.redirect("/login");
-    if(!req.body.subject || !req.body.title || !req.body.detail)
-        return res.send({status: 1});
-
-    let new_post = new Post({
-        is_student: false,
-        username: req.session.user.username,
-        subject: req.body.subject,
-        title: req.body.title,
-        range: req.body.range,
-        detail: req.body.detail,
-        when: 'none',
-        date: new Date()
-    });
-
-    new_post.save(function(err, result) {
-        if (err) throw err;
-        res.send({status: 0});
-    });
-}

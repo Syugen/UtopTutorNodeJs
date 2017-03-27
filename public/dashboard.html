@@ -9,11 +9,13 @@
                 <i class="fa fa-pencil-square-o fa"></i> Select course and time
             </div>
             <div class="panel-body">
-            <select>
-                <option selected disabled>PLEASE SELECT</option>
-                <option>CSC108</option>
-                <option>CSC148</option>
-            </select>
+            <form id="time-form">
+            Course: 
+            <select name="course">
+                <option value="0" selected disabled>PLEASE SELECT</option>
+                <option value="CSC108">CSC108</option>
+                <option value="CSC148">CSC148</option>
+            </select><br>
             <table class="table table-bordered">
                 <tr>
                 <th>Time</th>
@@ -35,6 +37,7 @@
                 </tr>
                 {% endfor %}
             </table>
+            </form>
             </div>
         </div>
     </div>
@@ -46,11 +49,13 @@
             </div>
 
             <div class="panel-body">
+            <form id="info-form">
                 WeChat (Contact us to change)<br>
-                <input type="text" value="{{session.user.username}}" readonly><br>
-                Phone<br><input type="text" id="phone-input"><br>
+                <input type="text" name="username" value="{{session.user.username}}" readonly><br>
+                Phone<br><input type="text" name="phone" id="phone-input"><br>
                 Location: Kelly Library<br>
                 <input type="submit" value="Submit">
+            </form>
             </div>
         </div>
     </div>

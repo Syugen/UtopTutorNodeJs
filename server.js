@@ -52,8 +52,7 @@ app.post("/login", signin.postLogin); // Done
 
 app.get("/dashboard", dashboard.getDashboard);// Done
 app.post("/postAdminUpdate", dashboard.postAdminUpdate);
-app.post("/postStudentRequest", dashboard.postStudentRequest);// Done
-app.post("/postTutorRequest", dashboard.postTutorRequest);// Done
+app.post("/postOrder", dashboard.postOrder);// Done
 
 app.get('/search', search.getSearch);// Done
 app.post('/makeFriends', search.makeFriends); //Done
