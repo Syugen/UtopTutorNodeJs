@@ -28,15 +28,14 @@ dashboard.init = function() {
         json_submit.cells = JSON.stringify(cells);
         $.post("/postOrder", json_submit, function(result) {
             let status = result.status;
-            if (status === 1) $("#form-feedback").text("Form incomplete");
+            if (status === 1) $("#form-feedback").text("To be implemented");
             else if (status === 0) {
-                $("#post-form")[0].reset();
-                $("#form-feedback").text("Post successfully");
+                $("#form-feedback").text("Ordered successfully");
             }
         });
     });
 
-    $("#phone-input").mask("(999) 999-9999");
+    if($("#phone-input").length) $("#phone-input").mask("(999) 999-9999");
 }
 
 $(document).ready(function() {

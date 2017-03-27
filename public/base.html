@@ -37,10 +37,10 @@
             </form>
             {% endif %}
             <ul class="nav navbar-nav navbar-right">
+                <li ><a href="dashboard">Order</a></li>
                 {% if session.user %}
-                <li ><a href="logout">Log out</a></li>
-                <li ><a href="dashboard">Dashboard</a></li>
                 <li ><a href="profile?id={{session.user.username}}">Profile</a></li>
+                <li ><a href="logout">Log out</a></li>
                 {% else %}
                 <li ><a href="signup">Sign up</a></li>
                 <li ><a href="login">Log in</a></li>

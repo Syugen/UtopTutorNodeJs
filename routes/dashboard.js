@@ -7,18 +7,16 @@ var Timetable = require("../models/timetable");
 var nodemailer = require('nodemailer');
 
 exports.getDashboard = function(req, res) {
-    if (req.session.user === undefined) return res.redirect("/login");
-
-    let start, end, dateString = [];
-    if (req.session.user.type === "admin" && req.query.start) {
+    let loggedIn = req.session.user, start, end, dateString = [];
+    if (loggedIn && req.session.user.type === "admin" && req.query.start) {
         start = new Date(req.query.start);
         start = new Date(start.getTime() + start.getTimezoneOffset() * 60000);
     } else {
         start = new Date();
-        if (req.session.user.type === "student") start.setDate(start.getDate() + 1);
+        if (!loggedIn || req.session.user.type === "student") start.setDate(start.getDate() + 1);
         start.setHours(0, 0, 0, 0);
     }
-    if (req.session.user.type === "admin" && req.query.end) {
+    if (loggedIn && req.session.user.type === "admin" && req.query.end) {
         end = new Date(req.query.end);
         end = new Date(end.getTime() + end.getTimezoneOffset() * 60000 + 86400000);
     }
@@ -37,11 +35,11 @@ exports.getDashboard = function(req, res) {
         dateString.push("" + year + month + date + "\n" + weekday[d.getDay()])
     }
 
-    if (req.session.user.type === "student") start.setDate(start.getDate() - 1);
+    if (!loggedIn || req.session.user.type === "student") start.setDate(start.getDate() - 1);
     Timetable.find({date: {$gte: start, $lt: end}}, function(err, slots) {
         if (err) throw err;
 
-        if (req.session.user.type === "student") start.setDate(start.getDate() + 1);
+        if (!loggedIn || req.session.user.type === "student") start.setDate(start.getDate() + 1);
         let cells = [], orders = [];
         for (let i = 9; i < 22; i++) {
             let row = [];
@@ -52,15 +50,15 @@ exports.getDashboard = function(req, res) {
         for (let i = 0; i < slots.length; i++) {
             let diff = Math.floor((slots[i].date.getTime() - start.getTime()) / 86400000);
 
-            if (req.session.user.type === "admin") {
+            if (loggedIn && req.session.user.type === "admin") {
                 cells[slots[i].date.getHours() - 9][diff] = slots[i];
                 let d = slots[i].order_date;
                 let t = [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds()];
                 for (let j = 1; j < t.length; j++) if (t[j] < 10) t[j] = "0" + t[j];
                 orders.push({"order_date": "" + t[0] + t[1] + t[2] + t[3] + t[4] + t[5], "username": slots[i].username});
-            } else if (req.session.user.type === "student") {
+            } else {
                 if (diff >= 0) cells[slots[i].date.getHours() - 9][diff] = {"NA": 1};
-                if (slots[i].username === req.session.user.username) {
+                if (loggedIn && slots[i].username === req.session.user.username) {
                     let today = new Date(), date = slots[i].date, dateString;
                     today.setHours(0, 0, 0, 0);
                     if (date.getTime() - today.getTime() < 86400000) dateString = "Today";
@@ -71,7 +69,10 @@ exports.getDashboard = function(req, res) {
             }
         }
 
-        if (req.session.user.type === "admin") {
+        if (!loggedIn) {
+            let setting = {dates: dateString, cells: cells, styles: ["dashboard"], scripts: ["dashboard"]};
+            return res.render("dashboard.html", setting);
+        } else if (req.session.user.type === "admin") {
             User.find({}, function(err, results) {
                 if (err) throw err;
 
@@ -112,8 +113,10 @@ exports.postOrder = function(req, res) {
 
     let new_order_json = JSON.parse(JSON.stringify(req.body));
     console.log(new_order_json);
+    res.send({status: 1});
 
-     let transporter = nodemailer.createTransport({
+/*
+    let transporter = nodemailer.createTransport({
          service: 'QQ', // no need to set host or port etc.
          auth: {
              user: '525916424@qq.com',
@@ -132,7 +135,7 @@ exports.postOrder = function(req, res) {
         if (error) return console.log(error);
         console.log('Message %s sent: %s', info.messageId, info.response);
     });
-
+*/
 /*    new_post.save(function(err, result) {
         if (err) throw err;
         res.send({status: 0});

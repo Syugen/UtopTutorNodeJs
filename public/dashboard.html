@@ -49,13 +49,16 @@
             </div>
 
             <div class="panel-body">
+            {% if session.user %}
             <form id="info-form">
                 WeChat (Contact us to change)<br>
                 <input type="text" name="username" value="{{session.user.username}}" readonly><br>
                 Phone<br><input type="text" name="phone" id="phone-input"><br>
                 Location: Kelly Library<br>
-                <input type="submit" value="Submit">
+                <input type="submit" value="Submit"><span id="form-feedback" style="color: red"></span>
             </form>
+            {% else %}Sign up or log in to order.
+            {% endif %}
             </div>
         </div>
     </div>
