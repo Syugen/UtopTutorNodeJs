@@ -21,13 +21,15 @@ exports.getDashboard = function(req, res) {
         end = new Date(end.getTime() + end.getTimezoneOffset() * 60000 + 86400000);
     }
     if (!req.query.end || end < start) {
-        end = new Date(new Date().setDate(start.getDate() + 7));
+        end = new Date(start.getTime());
+        end.setDate(start.getDate() + 7);
         end.setHours(0, 0, 0, 0);
     }
+
     let tableLength = Math.floor((end.getTime() - start.getTime()) / 86400000);
     for (let i = 0; i < tableLength; i++) {
         let weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        let d = new Date();
+        let d = new Date(start.getTime());
         d.setDate(start.getDate() + i);
         let year = d.getFullYear(), month = d.getMonth() + 1, date = d.getDate();
         if (date < 10) date = "0" + date;
@@ -90,7 +92,7 @@ exports.getDashboard = function(req, res) {
 }
 
 exports.postAdminUpdate = function(req, res) {
-    if (req.session.user === undefined) return res.redirect("/login");
+    if (req.session.user === undefined) return res.redirect("/login?from=dashboard");
     if (req.session.user.type !== "admin") return res.send({status: 1});
     let cells = JSON.parse(req.body.cells);
     for (let i = 0; i < cells.length; i++)
@@ -109,7 +111,7 @@ exports.postAdminUpdate = function(req, res) {
 }
 
 exports.postOrder = function(req, res) {
-    if (req.session.user === undefined) return res.redirect("/login");
+    if (req.session.user === undefined) return res.redirect("/login?from=dashboard");
 
     let new_order_json = JSON.parse(JSON.stringify(req.body));
     console.log(new_order_json);

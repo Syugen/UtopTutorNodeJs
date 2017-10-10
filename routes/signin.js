@@ -46,7 +46,8 @@ exports.postLogin = function(req, res) {
                 if (err) throw err;
 
                 req.session.user = { username: user.username, type: user.type };
-                res.json({status: 0});
+                let redirect = ["gre", "search"].includes(req.body.from) ? req.body.from : "dashboard";
+                res.json({status: 0, redirect: redirect});
             });
         }
     });

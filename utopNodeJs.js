@@ -15,6 +15,7 @@ var dashboard = require("./routes/dashboard");
 var profile = require("./routes/profile");
 var signin = require("./routes/signin");
 var search = require("./routes/search");
+var gre = require("./routes/gre");
 var User = require("./models/user");
 var Course = require("./models/course");
 
@@ -43,7 +44,7 @@ app.get("/signup", function(req, res) { // Done
 });
 
 app.get("/login", function(req, res) { // Done
-    res.render("login.html", { scripts: ["login"], styles: ["signin"] });
+    res.render("login.html", { scripts: ["login"], styles: ["signin"], from: req.query.from });
 });
 
 app.get('/logout', signin.getLogout);// Done
@@ -69,6 +70,9 @@ app.post("/profile", upload.single("picture"), profile.postProfile);// Done
 app.post("/removeCourse", profile.removeCourse);// Done
 app.post("/removeFriend", profile.removeFriend);// Done
 app.post("/removeTutorPost", profile.removeTutorPost);// Done
+
+app.get("/gre", gre.getGre);
+app.post("/postGreStartDate", gre.postStartDate);
 
 server.listen(3000, function(request, response) {
     console.log("Running on 127.0.0.1:%s", server.address().port);

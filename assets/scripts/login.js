@@ -27,7 +27,7 @@ signin.init = function() {
             if (status === 1) $("#error-message").text("Username does not exist");
             else if (status === 2) $("#error-message").text("Wrong password");
             else if (status === 0) {
-                window.location = "/dashboard";
+                window.location = "/" + result.redirect;
             }
         });
     });

@@ -9,7 +9,7 @@ var Post = require("../models/post");
 //build the response here..
 //handle HTTP request sent via dashboard.js(the assets' one)
 exports.getSearch = function(req, res) {
-    if (req.session.user === undefined) return res.redirect("/login");
+    if (req.session.user === undefined) return res.redirect("/login?from=search");
 
     let content = req.query.content;
     if (content.length === 0) {
