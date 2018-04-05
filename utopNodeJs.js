@@ -1,5 +1,6 @@
 'use strict';
 
+var path = require('path');
 var express = require("express");
 var app = require("express")();
 var bodyParser = require("body-parser");
@@ -19,7 +20,8 @@ var gre = require("./routes/gre");
 var User = require("./models/user");
 var Course = require("./models/course");
 
-nunjucks.configure('public', { autoescape: true, express: app });
+nunjucks.configure(path.resolve(__dirname + '/public/'),
+    { autoescape: true, express: app });
 
 app.use(express.static(__dirname + '/assets'));
 app.use(bodyParser.json());
