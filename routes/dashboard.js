@@ -4,7 +4,6 @@ var User = require("../models/user");
 var Course = require("../models/course");
 var Post = require("../models/post");
 var Timetable = require("../models/timetable");
-var nodemailer = require('nodemailer');
 
 exports.getDashboard = function(req, res) {
     let loggedIn = req.session.user, start, end, dateString = [];

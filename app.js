@@ -7,7 +7,6 @@ var bodyParser = require("body-parser");
 var nunjucks = require('nunjucks');
 var session = require('express-session');
 var server = require('http').createServer(app);
-var io = require('socket.io')(server);
 var multer = require('multer');
 var upload = multer({ dest: 'assets/avatars/' });
 
@@ -28,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({ secret: 'What is this', resave: false, saveUninitialized: false,
                   cookie: { maxAge: 900000 }}));
-app.engine('.html', require('ejs').__express);
+//app.engine('.html', require('ejs').__express);
 app.set('views', __dirname);
 app.set('view engine', 'html');
 
@@ -76,6 +75,6 @@ app.post("/removeTutorPost", profile.removeTutorPost);// Done
 app.get("/gre", gre.getGre);
 app.post("/postGreStartDate", gre.postStartDate);
 
-server.listen(3000, function(request, response) {
+server.listen(7000, function(request, response) {
     console.log("Running on 127.0.0.1:%s", server.address().port);
 });
